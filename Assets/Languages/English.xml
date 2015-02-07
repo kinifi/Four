@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Language>
+    <Name>English</Name>
+	<filePath></filePath>
+	<title>Data Heroes</title>
+	<playButton>Play</playButton>
+	<optionsButton>Options</optionsButton>
+	<quitButton>Quit</quitButton>
+  </Language>
+</Level>

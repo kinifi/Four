@@ -37,13 +37,15 @@ public class IM_Language : MonoBehaviour {
 
 	}
 
+	#region Public Methods for Consumption
+
 	/// <summary>
 	/// Sets the language. Only call after the object has confirmed languages setup.
 	/// </summary>
 	/// <param name="name">language name</param>
-	public void setLanguage()
+	public void setLanguage(string name = "english")
 	{
-		string name = "english";
+
 		//Debug.Log("starting to Set Language");
 
 		if(numLanguagesFound >= 1)
@@ -76,14 +78,20 @@ public class IM_Language : MonoBehaviour {
 	
 	}
 
+	#endregion
+
 	/// <summary>
 	/// Setups the languages.
 	/// </summary>
 	private void setupLanguages()
 	{
+		//set the default language path
 		defaultPath = Application.dataPath + "/" + "Languages" + "/";
 		getFilesFromLanguageFolder();
-		Invoke("setLanguage", 0.5f);
+		//call to set the language. Defaults to English
+		setLanguage();
+		//Uncomment for testing purposes
+		//setLanguage("Swedish");
 	}
 
 	/// <summary>
@@ -121,6 +129,12 @@ public class IM_Language : MonoBehaviour {
 				_languages.Add(_newLanguage);
 				//let us know we got a new language
 				//Debug.Log("Found and Added: " + languageName);
+
+				/////////////////////////////////////////////////////////
+				/// TODO: call XML Loader here! 
+				/// ////////////////////////////////////////
+
+
 			}
 
 			Debug.Log("Completed Gathering All Languages");

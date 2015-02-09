@@ -9,6 +9,8 @@ using System.IO;
 
 public class IM_Language : MonoBehaviour {
 
+	public bool debugXMLValues = false;
+
 	//Create a List of Languages to store for future use
 	public List<Languages> _languages = new List<Languages>();
 	public int numLanguagesFound;
@@ -89,7 +91,7 @@ public class IM_Language : MonoBehaviour {
 		defaultPath = Application.dataPath + "/" + "Languages" + "/";
 		getFilesFromLanguageFolder();
 		//call to set the language. Defaults to English
-		setLanguage();
+		setLanguage("swedish");
 		//Uncomment for testing purposes
 		//setLanguage("Swedish");
 	}
@@ -130,9 +132,8 @@ public class IM_Language : MonoBehaviour {
 				//let us know we got a new language
 				//Debug.Log("Found and Added: " + languageName);
 
-				/////////////////////////////////////////////////////////
-				/// TODO: call XML Loader here! 
-				/// ////////////////////////////////////////
+				//Load XML: FilePath, Name of File, Language Class Object
+				LoadXML(_newLanguage.filePath, _newLanguage.Name, _newLanguage);
 
 
 			}
@@ -199,31 +200,68 @@ public class IM_Language : MonoBehaviour {
 		Debug.Log("Finished Save: " + Time.realtimeSinceStartup);
 	}
 
-	private void LoadXML(string mapPath, string mapName)
+	/// <summary>
+	/// Loads the XML
+	/// </summary>
+	/// <param name="mapPath">Map path.</param>
+	/// <param name="mapName">Map name.</param>
+	/// <param name="_lang">Language from Class Object</param>
+	/// 
+	private void LoadXML(string mapPath, string mapName, Languages _lang)
 	{
-		
-		mapPath = Application.dataPath + "/UserLevels/" +  mapName + "/" + mapName + ".xml";
 
 		XmlReader reader = XmlReader.Create(mapPath);
 		XmlDocument xmlDoc = new XmlDocument();
 		xmlDoc.Load(reader);
 
 		#region per language
-		XmlNodeList _english = xmlDoc.GetElementsByTagName("English");
+		XmlNodeList _english = xmlDoc.GetElementsByTagName("Language");
 
-		//Get the background Color
-		Debug.Log(_english.Item(0).ChildNodes.Item(0).InnerText);
-		//Get the Author name
-		Debug.Log(_english.Item(0).ChildNodes.Item(1).InnerText);
-		//get the author Note
-		Debug.Log(_english.Item(0).ChildNodes.Item(2).InnerText);
+		//the first number is the first node in the XML doc
+		//Second number is the number of the item in the list. If it's the 4th from the top then you add 4 in it
+		//Example There is a node called "Language" and you want to read the 5th item in that node
+		//_english.Item(0).ChildNodes.Item(5).InnerText
+
+
+		//Get Language Name even though we already have it
+		DebugXML("Language Name: " + _english.Item(0).ChildNodes.Item(0).InnerText);
+
+		//Get the Path even though we laready have it
+		DebugXML("Path: " + _english.Item(0).ChildNodes.Item(1).InnerText);
+
+		//Get Title translation
+		DebugXML("Title: " + _english.Item(0).ChildNodes.Item(2).InnerText);
+		_lang.title = _english.Item(0).ChildNodes.Item(2).InnerText;
+		PlayerPrefs.SetString("title", _lang.title);
+
+		//Get Play Button translation
+		DebugXML(_english.Item(0).ChildNodes.Item(3).InnerText);
+		_lang.playButton = _english.Item(0).ChildNodes.Item(3).InnerText;
+		PlayerPrefs.SetString("playbutton", _lang.playButton);
+
+		//Get the Options Button Translation
+		DebugXML(_english.Item(0).ChildNodes.Item(4).InnerText);
+		_lang.optionsButton = _english.Item(0).ChildNodes.Item(4).InnerText;
+		PlayerPrefs.SetString("optionsbutton", _lang.optionsButton);
+
+		//get the Quit Button Translation
+		DebugXML(_english.Item(0).ChildNodes.Item(5).InnerText);
+		_lang.quitButton = _english.Item(0).ChildNodes.Item(5).InnerText;
+		PlayerPrefs.SetString("quitbutton", _lang.quitButton);
+
 		#endregion
 		
-		//////////////////////////////////////////
-		/// make sure all the data we need is set here!
-		/// //////////////////////////////////////
+		Debug.Log("Done Loading: " + _lang.Name);
 
 		reader.Close();
+	}
+
+	private void DebugXML(string log)
+	{
+		if(debugXMLValues)
+		{
+			Debug.Log(log);
+		}
 	}
 
 }

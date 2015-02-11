@@ -292,6 +292,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11466038, guid: c274166f70162214c9aefeb90de0808b, type: 2}
+      propertyPath: debugXMLValues
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c274166f70162214c9aefeb90de0808b, type: 2}
   m_RootGameObject: {fileID: 1184283654}

@@ -55,10 +55,27 @@ public class IM_Language : MonoBehaviour {
 
 			for (int i = 0; i < _languages.Count; i++) 
 			{
-				//Debug.Log(_languages[i].Name.ToLower() + " | " + name.ToLower());
+				DebugXML(_languages[i].Name.ToLower() + " | " + name.ToLower());
 				if(_languages[i].Name.ToLower() == name.ToLower())
 				{
 					currentLanguage = name;
+
+					//Set the file path
+					PlayerPrefs.SetString("filepath", _languages[i].filePath);
+					DebugXML(_languages[i].filePath);
+					//set the title
+					PlayerPrefs.SetString("title", _languages[i].title);
+					DebugXML(_languages[i].title);
+					//set the playbutton
+					PlayerPrefs.SetString("playbutton", _languages[i].playButton);
+					DebugXML(_languages[i].playButton);
+					//set the options button
+					PlayerPrefs.SetString("optionsbutton", _languages[i].optionsButton);
+					DebugXML(_languages[i].optionsButton);
+					//set the quit button
+					PlayerPrefs.SetString("quitbutton", _languages[i].quitButton);
+					DebugXML(_languages[i].quitButton);
+
 					Debug.Log("Language Set: " + name);
 					break;
 				}
@@ -91,9 +108,8 @@ public class IM_Language : MonoBehaviour {
 		defaultPath = Application.dataPath + "/" + "Languages" + "/";
 		getFilesFromLanguageFolder();
 		//call to set the language. Defaults to English
-		setLanguage("swedish");
-		//Uncomment for testing purposes
-		//setLanguage("Swedish");
+		setLanguage("japanese");
+		//setLanguage("language name");
 	}
 
 	/// <summary>
@@ -123,14 +139,14 @@ public class IM_Language : MonoBehaviour {
 				Languages _newLanguage = new Languages();
 				//set the language name
 				_newLanguage.Name = Path.GetFileNameWithoutExtension(languageName);
-				//Debug.Log("Name: " + _newLanguage.Name);
+				DebugXML("Name: " + _newLanguage.Name);
 				//set the language file path
 				_newLanguage.filePath = languageName;
-				//Debug.Log("File Path: " + _newLanguage.filePath);
+				DebugXML("File Path: " + _newLanguage.filePath);
 				//add the file to the languages List
 				_languages.Add(_newLanguage);
 				//let us know we got a new language
-				//Debug.Log("Found and Added: " + languageName);
+				DebugXML("Found and Added: " + languageName);
 
 				//Load XML: FilePath, Name of File, Language Class Object
 				LoadXML(_newLanguage.filePath, _newLanguage.Name, _newLanguage);
@@ -232,22 +248,22 @@ public class IM_Language : MonoBehaviour {
 		//Get Title translation
 		DebugXML("Title: " + _english.Item(0).ChildNodes.Item(2).InnerText);
 		_lang.title = _english.Item(0).ChildNodes.Item(2).InnerText;
-		PlayerPrefs.SetString("title", _lang.title);
+		//PlayerPrefs.SetString("title", _lang.title);
 
 		//Get Play Button translation
 		DebugXML(_english.Item(0).ChildNodes.Item(3).InnerText);
 		_lang.playButton = _english.Item(0).ChildNodes.Item(3).InnerText;
-		PlayerPrefs.SetString("playbutton", _lang.playButton);
+		//PlayerPrefs.SetString("playbutton", _lang.playButton);
 
 		//Get the Options Button Translation
 		DebugXML(_english.Item(0).ChildNodes.Item(4).InnerText);
 		_lang.optionsButton = _english.Item(0).ChildNodes.Item(4).InnerText;
-		PlayerPrefs.SetString("optionsbutton", _lang.optionsButton);
+		//PlayerPrefs.SetString("optionsbutton", _lang.optionsButton);
 
 		//get the Quit Button Translation
 		DebugXML(_english.Item(0).ChildNodes.Item(5).InnerText);
 		_lang.quitButton = _english.Item(0).ChildNodes.Item(5).InnerText;
-		PlayerPrefs.SetString("quitbutton", _lang.quitButton);
+		//PlayerPrefs.SetString("quitbutton", _lang.quitButton);
 
 		#endregion
 		

@@ -30,37 +30,84 @@ public class IM_Language : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-		//TODO: Do we need this?
-		//Don't destory this GameObject so we can reference it throughout our game
-		//DontDestroyOnLoad(this.gameObject);
 
 		//Call to start the loading of languages process
 		setupLanguages();
 
 	}
 
-	#region Public Methods for Consumption
+	/// <summary>
+	/// Setups the languages.
+	/// </summary>
+	private void setupLanguages()
+	{
+		//set the default language path
+		defaultPath = Application.dataPath + "/" + "Languages" + "/";
+		getFilesFromLanguageFolder();
 
+		//call to set the language. Defaults to English
+
+		//Call to get the system language, pass true to set the game language to the system language
+		getSystemLanguage(true);
+	}
+
+	/// <summary>
+	/// Gets the system language.
+	/// </summary>
+	/// <returns>The system language.</returns>
+	/// <param name="setLanguage">If set to <c>true</c> set language.</param>
+	public string getSystemLanguage(bool newSetLanguage)
+	{
+		string _tempLang = Application.systemLanguage.ToString();
+
+		if(newSetLanguage)
+		{
+			for (int i = 0; i < _languages.Count; i++)
+			{
+				if(_languages[i].Name == _tempLang)
+				{
+					setLanguage(_tempLang);
+					Debug.Log("Setting: " + _tempLang + " as Language");
+				}
+				else
+				{
+					if(i == _languages.Count)
+					{
+						setLanguage();
+						Debug.Log("System Language does not match any language files");
+					}
+				}
+			}
+		}
+		else
+		{
+			setLanguage();
+		}
+
+		return _tempLang;
+	}
+
+	#region Public Methods for Consumption
+	
 	/// <summary>
 	/// Sets the language. Only call after the object has confirmed languages setup.
 	/// </summary>
 	/// <param name="name">language name</param>
 	public void setLanguage(string name = "english")
 	{
-
+		
 		//Debug.Log("starting to Set Language");
-
+		
 		if(numLanguagesFound >= 1)
 		{
-
+			
 			for (int i = 0; i < _languages.Count; i++) 
 			{
 				DebugXML(_languages[i].Name.ToLower() + " | " + name.ToLower());
 				if(_languages[i].Name.ToLower() == name.ToLower())
 				{
 					currentLanguage = name;
-
+					
 					//Set the file path
 					PlayerPrefs.SetString("filepath", _languages[i].filePath);
 					DebugXML(_languages[i].filePath);
@@ -76,7 +123,7 @@ public class IM_Language : MonoBehaviour {
 					//set the quit button
 					PlayerPrefs.SetString("quitbutton", _languages[i].quitButton);
 					DebugXML(_languages[i].quitButton);
-
+					
 					Debug.Log("Language Set: " + name);
 					break;
 				}
@@ -88,30 +135,18 @@ public class IM_Language : MonoBehaviour {
 					}
 				}
 			}
-
+			
 		}
 		else
 		{
 			currentLanguage = "english";
 			Debug.Log("Only one language. Setting to English(default)");
 		}
-	
+		
 	}
-
+	
 	#endregion
 
-	/// <summary>
-	/// Setups the languages.
-	/// </summary>
-	private void setupLanguages()
-	{
-		//set the default language path
-		defaultPath = Application.dataPath + "/" + "Languages" + "/";
-		getFilesFromLanguageFolder();
-
-		//call to set the language. Defaults to English
-		setLanguage();
-	}
 
 	/// <summary>
 	/// Gets the files from languages folder.

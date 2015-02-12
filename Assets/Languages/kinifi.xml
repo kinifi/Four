@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <Language>
+    <Name>kinifi</Name>
+    <filePath>/Users/chrisfigueroa/Desktop/Four/Assets/Languages/kinifi.xml</filePath>
+    <title>kinifis title</title>
+    <playButton>play!</playButton>
+    <optionsButton>options!!</optionsButton>
+    <quitButton>quit!!</quitButton>
+  </Language>
+</Level>

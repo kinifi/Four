@@ -31,8 +31,9 @@ public class IM_Language : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+		//TODO: Do we need this?
 		//Don't destory this GameObject so we can reference it throughout our game
-		DontDestroyOnLoad(this.gameObject);
+		//DontDestroyOnLoad(this.gameObject);
 
 		//Call to start the loading of languages process
 		setupLanguages();
@@ -107,9 +108,9 @@ public class IM_Language : MonoBehaviour {
 		//set the default language path
 		defaultPath = Application.dataPath + "/" + "Languages" + "/";
 		getFilesFromLanguageFolder();
+
 		//call to set the language. Defaults to English
-		setLanguage("japanese");
-		//setLanguage("language name");
+		setLanguage();
 	}
 
 	/// <summary>
@@ -181,39 +182,6 @@ public class IM_Language : MonoBehaviour {
 			Debug.Log("Languages Folder exists");
 
 		}
-	}
-
-	private void saveXML(string path, string fileName, string currentLanguage)
-	{
-		//set the path 
-		path = Application.dataPath + "/Languages/" + fileName + ".xml";
-
-
-		
-		XmlDocument xmlDoc = new XmlDocument();
-		//save to the node of the current language
-		//example
-		//<English>
-		//<Title> Data Heroeos </Title>
-		//</English>
-
-		XmlElement elmRoot = xmlDoc.CreateElement(currentLanguage);
-		xmlDoc.AppendChild(elmRoot);
-		
-		XmlElement settings = xmlDoc.CreateElement("Settings");
-		XmlElement authorName = xmlDoc.CreateElement("authorName");
-		XmlElement authorNote = xmlDoc.CreateElement("authorNote");
-		//authorName.InnerText = author_Name;
-		//authorNote.InnerText = author_Note;
-		elmRoot.AppendChild(settings);
-		settings.AppendChild(authorName);
-		settings.AppendChild(authorNote);
-		
-		
-		StreamWriter outStream = System.IO.File.CreateText(path);
-		xmlDoc.Save(outStream);
-		outStream.Close();
-		Debug.Log("Finished Save: " + Time.realtimeSinceStartup);
 	}
 
 	/// <summary>

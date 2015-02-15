@@ -49,12 +49,14 @@ public class IM_Language : MonoBehaviour {
 
 		//Call to get the system language, pass true to set the game language to the system language
 		getSystemLanguage(true);
+		//setLanguage("Chinese");
 	}
 
 	/// <summary>
 	/// Gets the system language.
 	/// </summary>
 	/// <returns>The system language.</returns>
+	/// See unity docs for Application.systemLanguage for exact names
 	/// <param name="setLanguage">If set to <c>true</c> set language.</param>
 	public string getSystemLanguage(bool newSetLanguage)
 	{
